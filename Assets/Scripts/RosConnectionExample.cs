@@ -1,4 +1,5 @@
 using RosMessageTypes.Sensor;
+using RosMessageTypes.Std;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ public class RosConnectionExample : MonoBehaviour
     public RawImage display;
     ROSConnection rosNode;
     string imageTopic = "US_images";
-
+    string audioTextTopic = "text";
     void Start()
     {
         // start the ROS connection
@@ -22,12 +23,18 @@ public class RosConnectionExample : MonoBehaviour
 
 
         // subscribe ultrasound images from Clara AGX
-        rosNode.Subscribe<ImageMsg>(imageTopic, displayImage);
+        //rosNode.Subscribe<ImageMsg>(imageTopic, displayImage);
+        rosNode.Subscribe<StringMsg>(audioTextTopic, ReseveMsg);
 
         // publish audios recorded by HoloLens2 to /audio, Clara AGX will fetch data from this topic
         rosNode.RegisterPublisher<RosMessageTypes.Std.ByteMultiArrayMsg>("audio");
 
 
+    }
+
+    private void ReseveMsg(StringMsg obj)
+    {
+        Debug.Log(obj.data);
     }
 
 
