@@ -12,7 +12,9 @@ public class ObjectStorageController : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
 
     [SerializeField] private LocationStorageUIController uiController;
-    
+
+    private bool shouldCreateViewItem;
+
     private Recorder recorder;
     private void Awake()
     {
@@ -36,8 +38,19 @@ public class ObjectStorageController : MonoBehaviour
 
     public void OnSaveObjectLocation(string key)
     {
+        if (!shouldCreateViewItem)
+            return;
+
+        shouldCreateViewItem = false;
         Debug.Log(key);
         storage.SavePosition(key, cameraTransform.position);
+    }
+
+    public void OnTextReceived(string key)
+    {
+        if (shouldCreateViewItem)
+            return;
+        holoScanApI.PublishString(key);
     }
 
     public void OnVirtualObjectLocation()
@@ -46,6 +59,16 @@ public class ObjectStorageController : MonoBehaviour
         storage.AddVirtualObject(cameraTransform.position + cameraTransform.forward * 0.5f);
     }
     
+    public void OnStartRecordingLocation()
+    {
+        recorder.StartRecording();
+    }
+    public void OnStopRecordingLocation()
+    {
+        recorder.SaveRecording();
+        shouldCreateViewItem = true;
+    }
+
     public void OnStartRecording()
     {
         recorder.StartRecording();
