@@ -12,4 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7f51cdee96b3b94bbd6ab631bdc5997, type: 3}
   m_Name: ObjectStorage
   m_EditorClassIdentifier: 
+  prefabDatabase:
+  - {fileID: 4020301076252454839, guid: 790ad207ce7a99d4c9418b8b74709f30, type: 3}
+  - {fileID: 6503767746068811388, guid: 1e8cf9e5d5313b648a4c69cb3cbd7933, type: 3}
+  - {fileID: 4586015160678511417, guid: 4e207056c83547c478f7402bafed563e, type: 3}
+  - {fileID: 7455226095228746663, guid: 7f84b4c3eb48b284d9adce5f6c9d74a7, type: 3}
+  - {fileID: 991772091271405823, guid: 060b9700ae7b88444a46d0754ec311ea, type: 3}
+  - {fileID: 5119124358273326000, guid: 5917e80f3903704489aea78a3a851eb7, type: 3}
+  useVirtualPlaceholders: 1
   prefab: {fileID: 3183833124833486220, guid: 083f4a318df12804eb11ac287e678091, type: 3}

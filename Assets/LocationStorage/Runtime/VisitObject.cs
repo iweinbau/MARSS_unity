@@ -1,25 +1,30 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider))]
+[RequireComponent(typeof(Collider))]
 public class VisitObject : MonoBehaviour
 {
-    [SerializeField] private BoxCollider m_boxCollider;
+    [SerializeField] private Collider collider;
     [SerializeField] public Action<VisitObject> OnColliderTriggerEvent;
 
     public void EnableCollider()
     {
-        m_boxCollider.enabled = true;
+        collider.enabled = true;
     }
 
     public void DisableCollider()
     {
-        m_boxCollider.enabled = false;
+        collider.enabled = false;
+    }
+
+    private void Awake()
+    {
+        collider = GetComponent<Collider>();
     }
 
     private void Start()
     {
-        m_boxCollider.enabled = false;
+        collider.enabled = false;
     }
 
     private void OnTriggerEnter(Collider collision)

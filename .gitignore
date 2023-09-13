@@ -74,3 +74,6 @@ crashlytics-build.properties
 
 /[Aa]ssets/[Ss]treamingAssets/*.wav.meta
 /[Aa]ssets/[Ss]treamingAssets/*.wav
+
+/Packages/MixedReality/com.microsoft.mixedreality.toolkit.examples-2.8.3.tgz
+/Packages/MixedReality/com.microsoft.mixedreality.toolkit.extensions-2.8.3.tgz

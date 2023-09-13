@@ -11,6 +11,7 @@ namespace HoloScan.Runtime
         [Header("Ros Keys")]
         [SerializeField] string textKey = "text";
         [SerializeField] string gptKey = "gpttext";
+        [SerializeField] string gptoutputKey = "gptoutput";
         [SerializeField] string audioKey = "audio";
 
 
@@ -27,6 +28,7 @@ namespace HoloScan.Runtime
 
             // subscribe ultrasound images from Clara AGX
             rosNode.Subscribe<StringMsg>(textKey, OnMessageReceivedUnpack);
+            rosNode.Subscribe<StringMsg>(gptoutputKey, OnGPTMessageReceivedUnpack);
 
             // publish audios recorded by HoloLens2 to /audio, Clara AGX will fetch data from this topic
             rosNode.RegisterPublisher<ByteMultiArrayMsg>(audioKey);
@@ -50,6 +52,13 @@ namespace HoloScan.Runtime
         private void OnMessageReceivedUnpack(StringMsg msg)
         {
             OnMessageReceived?.Invoke(msg.data);
+            PublishString(msg.data);
+        }
+        
+        private void OnGPTMessageReceivedUnpack(StringMsg msg)
+        {
+            Debug.Log(msg.data);
+            //OnMessageReceived?.Invoke(msg.data);
         }
     }
 }
