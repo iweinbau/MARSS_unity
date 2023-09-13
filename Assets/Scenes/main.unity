@@ -2522,10 +2522,10 @@ MonoBehaviour:
     m_Right: 20
     m_Top: 20
     m_Bottom: 20
-  m_ChildAlignment: 0
+  m_ChildAlignment: 1
   m_Spacing: 20
-  m_ChildForceExpandWidth: 0
-  m_ChildForceExpandHeight: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
   m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
@@ -5076,6 +5076,7 @@ GameObject:
   - component: {fileID: 5232263197584282010}
   - component: {fileID: 5558776615679700201}
   - component: {fileID: 4974881952822503414}
+  - component: {fileID: 7743949000245086780}
   m_Layer: 0
   m_Name: ChatGPT chat
   m_TagString: Untagged
@@ -6770,6 +6771,20 @@ MonoBehaviour:
   useFixedVerticalPosition: 1
   fixedVerticalPosition: -0.2
   orientToReferenceDirection: 0
+--- !u!114 &7743949000245086780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6167216907452289901}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0350a74f3759c642b85b44ec317c844, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ConversationTransform: {fileID: 2916075832080769567}
+  textMessagePrefab: {fileID: 67164659727531223, guid: 7863121093f65c54dbe8045a0517c099, type: 3}
 --- !u!1 &7959941124813628329
 GameObject:
   m_ObjectHideFlags: 0

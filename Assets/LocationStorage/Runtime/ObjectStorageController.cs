@@ -13,6 +13,8 @@ public class ObjectStorageController : MonoBehaviour
 
     [SerializeField] private LocationStorageUIController uiController;
 
+    [SerializeField] private GPTUIController gptController;
+
     private bool shouldCreateViewItem;
 
     private Recorder recorder;
@@ -27,12 +29,14 @@ public class ObjectStorageController : MonoBehaviour
     private void OnEnable()
     {
         holoScanApI.OnMessageReceived.AddListener(OnSaveObjectLocation);
+        holoScanApI.OnMessageGPTReceived.AddListener(OnGPTTextReceived);
         storage.OnVisitItemProgress += uiController.ShowReachedVisitObject;
     }
 
     private void OnDisable()
     {
         holoScanApI.OnMessageReceived.RemoveListener(OnSaveObjectLocation);
+        holoScanApI.OnMessageGPTReceived.RemoveListener(OnGPTTextReceived);
         storage.OnVisitItemProgress -= uiController.ShowReachedVisitObject;
     }
 
@@ -50,7 +54,14 @@ public class ObjectStorageController : MonoBehaviour
     {
         if (shouldCreateViewItem)
             return;
+
+        gptController.AddUserPrompt(key);
         holoScanApI.PublishString(key);
+    }
+
+    public void OnGPTTextReceived(string message)
+    {
+        gptController.AddGPTPrompt(message);
     }
 
     public void OnVirtualObjectLocation()

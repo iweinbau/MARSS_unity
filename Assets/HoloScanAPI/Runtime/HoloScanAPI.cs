@@ -19,6 +19,7 @@ namespace HoloScan.Runtime
 
         [Header("Event handlers")]
         public UnityEvent<string> OnMessageReceived;
+        public UnityEvent<string> OnMessageGPTReceived;
 
         // Start is called before the first frame update
         void Awake()
@@ -52,13 +53,12 @@ namespace HoloScan.Runtime
         private void OnMessageReceivedUnpack(StringMsg msg)
         {
             OnMessageReceived?.Invoke(msg.data);
-            PublishString(msg.data);
         }
         
         private void OnGPTMessageReceivedUnpack(StringMsg msg)
         {
             Debug.Log(msg.data);
-            //OnMessageReceived?.Invoke(msg.data);
+            OnMessageGPTReceived?.Invoke(msg.data);
         }
     }
 }
