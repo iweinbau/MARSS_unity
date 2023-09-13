@@ -4,50 +4,52 @@ using Unity.Robotics.ROSTCPConnector;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class HoloScanAPI : MonoBehaviour
+namespace HoloScan.Runtime
 {
-    [Header("Ros Keys")]
-    [SerializeField] string textKey = "text";
-    [SerializeField] string gptKey = "gpttext";
-    [SerializeField] string audioKey = "audio";
-
-    
-    private ROSConnection rosNode;
-
-    [Header("Event handlers")]
-    public UnityEvent<string> OnMessageReceived;
-
-    // Start is called before the first frame update
-    void Awake()
+    public class HoloScanAPI : MonoBehaviour
     {
-        // start the ROS connection
-        rosNode = ROSConnection.GetOrCreateInstance();
+        [Header("Ros Keys")]
+        [SerializeField] string textKey = "text";
+        [SerializeField] string gptKey = "gpttext";
+        [SerializeField] string audioKey = "audio";
 
-        // subscribe ultrasound images from Clara AGX
-        rosNode.Subscribe<StringMsg>(textKey, OnMessageReceivedUnpack);
 
-        // publish audios recorded by HoloLens2 to /audio, Clara AGX will fetch data from this topic
-        rosNode.RegisterPublisher<ByteMultiArrayMsg>(audioKey);
-        rosNode.RegisterPublisher<StringMsg>(gptKey);
+        private ROSConnection rosNode;
+
+        [Header("Event handlers")]
+        public UnityEvent<string> OnMessageReceived;
+
+        // Start is called before the first frame update
+        void Awake()
+        {
+            // start the ROS connection
+            rosNode = ROSConnection.GetOrCreateInstance();
+
+            // subscribe ultrasound images from Clara AGX
+            rosNode.Subscribe<StringMsg>(textKey, OnMessageReceivedUnpack);
+
+            // publish audios recorded by HoloLens2 to /audio, Clara AGX will fetch data from this topic
+            rosNode.RegisterPublisher<ByteMultiArrayMsg>(audioKey);
+            rosNode.RegisterPublisher<StringMsg>(gptKey);
+        }
+
+        public void PublishBytes(byte[] data)
+        {
+            sbyte[] sdata = (sbyte[])(Array)data;
+            ByteMultiArrayMsg msg = new ByteMultiArrayMsg(new MultiArrayLayoutMsg(), sdata);
+            rosNode.Publish(audioKey, msg);
+            Debug.Log($"publish a bytearray of size: {data.Length}");
+        }
+
+        public void PublishString(string msg)
+        {
+            StringMsg msgObj = new StringMsg(msg);
+            rosNode.Publish(gptKey, msgObj);
+        }
+
+        private void OnMessageReceivedUnpack(StringMsg msg)
+        {
+            OnMessageReceived?.Invoke(msg.data);
+        }
     }
-
-    public void PublishBytes(byte[] data)
-    {
-        sbyte[] sdata = (sbyte[])(Array)data;
-        ByteMultiArrayMsg msg = new ByteMultiArrayMsg(new MultiArrayLayoutMsg(), sdata);
-        rosNode.Publish(audioKey, msg);
-        Debug.Log($"publish a bytearray of size: {data.Length}");
-    }
-
-    public void PublishString(string msg)
-    {
-        StringMsg msgObj = new StringMsg(msg);
-        rosNode.Publish(gptKey, msgObj);
-    }
-
-    private void OnMessageReceivedUnpack(StringMsg msg)
-    {
-        OnMessageReceived?.Invoke(msg.data);
-    }
-
 }
