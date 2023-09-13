@@ -5,7 +5,7 @@ using UnityEngine;
 public class VisitObject : MonoBehaviour
 {
     [SerializeField] private BoxCollider m_boxCollider;
-    [SerializeField] public Action OnColliderTriggerEvent;
+    [SerializeField] public Action<VisitObject> OnColliderTriggerEvent;
 
     public void EnableCollider()
     {
@@ -26,7 +26,7 @@ public class VisitObject : MonoBehaviour
     {
         if (collision.tag == "MainCamera")
         {
-            OnColliderTriggerEvent?.Invoke();
+            OnColliderTriggerEvent?.Invoke(this);
         }
     }
 }

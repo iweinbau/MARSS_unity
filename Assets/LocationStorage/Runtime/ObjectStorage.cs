@@ -7,6 +7,8 @@ public class ObjectStorage: ScriptableObject
     [SerializeField] private GameObject prefab;
     [SerializeField] private Dictionary<string, VisitObject> objectStorage;
 
+    private int visitedObjectsCounter = 0;
+
     public void SavePosition(string key, Vector3 position)
     {
         if (objectStorage == null)
@@ -18,14 +20,29 @@ public class ObjectStorage: ScriptableObject
         viewObject.gameObject.name = key;
 
         VisitObject visitObject = viewObject.GetComponent<VisitObject>();
+        visitObject.OnColliderTriggerEvent += OnVisitObject;
 
         // Store the camera transform with its timestamp in the dictionary
         Debug.Log($"Save object: {key} at position: {position}");
         objectStorage.Add(key, visitObject);
     }
 
-    public void EnableVisitObjects()
+    public void OnVisitObject(VisitObject obj)
     {
+        visitedObjectsCounter++;
+        obj.DisableCollider();
+
+        Debug.Log(obj.name);
+
+        if (visitedObjectsCounter == objectStorage.Count -1)
+        {
+            Debug.Log("You win");
+        }
+    }
+
+    public void OnReplayStarted()
+    {
+        visitedObjectsCounter = 0;
         foreach (VisitObject obj in objectStorage.Values)
         {
             obj.EnableCollider();

@@ -46,6 +46,6 @@ public class ObjectStorageController : MonoBehaviour
 
     public void OnReplay()
     {
-        storage.EnableVisitObjects();
+        storage.OnReplayStarted();
     }
 }
