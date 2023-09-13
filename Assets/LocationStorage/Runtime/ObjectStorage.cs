@@ -31,10 +31,7 @@ public class ObjectStorage: ScriptableObject
     {
         visitedObjectsCounter++;
         obj.DisableCollider();
-
-        Debug.Log(obj.name);
-
-        if (visitedObjectsCounter == objectStorage.Count -1)
+        if (visitedObjectsCounter == objectStorage.Count)
         {
             Debug.Log("You win");
         }
