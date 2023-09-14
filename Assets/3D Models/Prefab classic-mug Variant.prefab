@@ -132,7 +132,7 @@ MonoBehaviour:
   useForcesForNearManipulation: 0
   oneHandRotationModeNear: 1
   oneHandRotationModeFar: 1
-  releaseBehavior: 3
+  releaseBehavior: 0
   transformSmoothingLogicType:
     reference: Microsoft.MixedReality.Toolkit.Utilities.DefaultTransformSmoothingLogic,
       Microsoft.MixedReality.Toolkit.SDK
@@ -142,7 +142,7 @@ MonoBehaviour:
   rotateLerpTime: 0.001
   scaleLerpTime: 0.001
   enableConstraints: 1
-  constraintsManager: {fileID: 1322485443, guid: 5917e80f3903704489aea78a3a851eb7, type: 3}
+  constraintsManager: {fileID: 1954651526}
   elasticsManager: {fileID: 0}
   onManipulationStarted:
     m_PersistentCalls:

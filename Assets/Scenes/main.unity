@@ -459,6 +459,7 @@ MonoBehaviour:
   holoScanApI: {fileID: 1737228152}
   audioSource: {fileID: 272812164}
   uiController: {fileID: 138191808}
+  gptController: {fileID: 7743949000245086780}
 --- !u!1 &479820709
 GameObject:
   m_ObjectHideFlags: 0
@@ -488,7 +489,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &787526216
 PrefabInstance:
@@ -1268,6 +1269,9 @@ MonoBehaviour:
   gptoutputKey: gptoutput
   audioKey: audio
   OnMessageReceived:
+    m_PersistentCalls:
+      m_Calls: []
+  OnMessageGPTReceived:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1834034130
@@ -5057,7 +5061,7 @@ Transform:
   - {fileID: 1797848856374730020}
   - {fileID: 2915554495964936133}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6167216907452289901
 GameObject:

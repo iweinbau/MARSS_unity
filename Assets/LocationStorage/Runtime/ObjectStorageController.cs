@@ -28,6 +28,7 @@ public class ObjectStorageController : MonoBehaviour
 
     private void OnEnable()
     {
+        holoScanApI.OnMessageReceived.AddListener(OnTextReceived);
         holoScanApI.OnMessageReceived.AddListener(OnSaveObjectLocation);
         holoScanApI.OnMessageGPTReceived.AddListener(OnGPTTextReceived);
         storage.OnVisitItemProgress += uiController.ShowReachedVisitObject;
@@ -35,6 +36,7 @@ public class ObjectStorageController : MonoBehaviour
 
     private void OnDisable()
     {
+        holoScanApI.OnMessageReceived.RemoveListener(OnTextReceived);
         holoScanApI.OnMessageReceived.RemoveListener(OnSaveObjectLocation);
         holoScanApI.OnMessageGPTReceived.RemoveListener(OnGPTTextReceived);
         storage.OnVisitItemProgress -= uiController.ShowReachedVisitObject;
