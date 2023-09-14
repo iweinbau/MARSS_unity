@@ -17,6 +17,7 @@ public class ObjectStorageController : MonoBehaviour
     [SerializeField] private GPTUIController gptController;
 
     private bool shouldCreateViewItem;
+    private bool shouldCreateVirtualViewItem;
 
     private Recorder recorder;
     private void Awake()
@@ -48,9 +49,16 @@ public class ObjectStorageController : MonoBehaviour
         if (!shouldCreateViewItem)
             return;
 
-        shouldCreateViewItem = false;
         Debug.Log(key);
-        storage.SavePosition(key, cameraTransform.position);
+
+        if (!shouldCreateVirtualViewItem)
+            storage.SavePosition(key, cameraTransform.position);
+
+        else
+            storage.AddVirtualObject(key, cameraTransform.position + cameraTransform.forward * 0.5f);
+
+        shouldCreateViewItem = false;
+        shouldCreateVirtualViewItem = false;
     }
 
     public void OnTextReceived(string key)
@@ -66,12 +74,6 @@ public class ObjectStorageController : MonoBehaviour
     {
         gptController.AddGPTPrompt(message);
     }
-
-    public void OnVirtualObjectLocation()
-    {
-        Debug.Log("Virtual object stored");
-        storage.AddVirtualObject(cameraTransform.position + cameraTransform.forward * 0.5f);
-    }
     
     public void OnStartRecordingLocation()
     {
@@ -81,6 +83,18 @@ public class ObjectStorageController : MonoBehaviour
     {
         recorder.SaveRecording();
         shouldCreateViewItem = true;
+        shouldCreateVirtualViewItem = false;
+
+    }
+    public void OnStartVirtualRecordingLocation()
+    {
+        recorder.StartRecording();
+    }
+    public void OnStopVirtualRecordingLocation()
+    {
+        recorder.SaveRecording();
+        shouldCreateViewItem = true;
+        shouldCreateVirtualViewItem = true;
     }
 
     public void OnStartRecording()
@@ -104,7 +118,7 @@ public class ObjectStorageController : MonoBehaviour
                 gptPrompt += $", \"{keys[i]}\"";
 
         }
-        gptPrompt += ". Then tell me a short story of 150 words to remember these objects and its locations.";
+        gptPrompt += ". Then tell me a mnemonic to help me remember these objects and its locations.";
         holoScanApI.PublishString(gptPrompt);
     }
 

@@ -23,7 +23,7 @@ public class ObjectStorage : ScriptableObject
     
     private int visitedObjectsCounter = 0;
     private int spawnIndex = 0;
-    public void AddVirtualObject(Vector3 position)
+    public void AddVirtualObject(string key, Vector3 position)
     {
         if (objectStorage == null)
         {
@@ -36,8 +36,8 @@ public class ObjectStorage : ScriptableObject
         visitObject.OnColliderTriggerEvent += OnVisitObject;
 
         // Store the camera transform with its timestamp in the dictionary
-        Debug.Log($"Save object: {viewObject.name} at position: {position}");
-        objectStorage.Add(viewObject.name, visitObject);
+        Debug.Log($"Save virtual object: {viewObject.name} at position: {position}");
+        objectStorage.Add(key, visitObject);
         
         OnVisitItemProgress?.Invoke(visitedObjectsCounter, objectStorage.Count);
     }
