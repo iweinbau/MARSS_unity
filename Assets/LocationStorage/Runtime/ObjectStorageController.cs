@@ -94,7 +94,7 @@ public class ObjectStorageController : MonoBehaviour
 
     public void CreateMemoryBridge()
     {
-        string gptPrompt = $"Tell me a short story of 150 words to remember these objects and its locations: ";
+        string gptPrompt = $"Make a list of these and all previous objects and it's locations: ";
         string[] keys = storage.GetKeys();
         for (int i = 0; i < keys.Length; i++)
         {
@@ -104,8 +104,8 @@ public class ObjectStorageController : MonoBehaviour
                 gptPrompt += $", \"{keys[i]}\"";
 
         }
-
-        Debug.Log(gptPrompt);
+        gptPrompt += ". Then tell me a short story of 150 words to remember these objects and its locations.";
+        holoScanApI.PublishString(gptPrompt);
     }
 
     public void OnReplay()
