@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 using Action = Unity.Plastic.Antlr3.Runtime.Misc.Action;
+using System.Linq;
 
 [CreateAssetMenu(fileName = "ObjectStorage", menuName = "ScriptableObjects/ObjectStorage", order = 1)]
 public class ObjectStorage : ScriptableObject
@@ -84,6 +85,11 @@ public class ObjectStorage : ScriptableObject
         
         OnVisitItemProgress?.Invoke(visitedObjectsCounter, objectStorage.Count);
         OnGameStarted?.Invoke();
+    }
+
+    public string[] GetKeys()
+    {
+        return objectStorage.Keys.ToArray();
     }
 
 }

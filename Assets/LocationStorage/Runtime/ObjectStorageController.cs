@@ -1,4 +1,5 @@
 using HoloScan.Runtime;
+using Unity.VisualScripting.YamlDotNet.Core.Tokens;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
@@ -89,6 +90,22 @@ public class ObjectStorageController : MonoBehaviour
     public void OnStopRecording()
     {
         recorder.SaveRecording();
+    }
+
+    public void CreateMemoryBridge()
+    {
+        string gptPrompt = $"Tell me a short story of 150 words to remember these objects and its locations: ";
+        string[] keys = storage.GetKeys();
+        for (int i = 0; i < keys.Length; i++)
+        {
+            if (i == 0)
+                gptPrompt += $"\"{keys[i]}\"";
+            else
+                gptPrompt += $", \"{keys[i]}\"";
+
+        }
+
+        Debug.Log(gptPrompt);
     }
 
     public void OnReplay()
